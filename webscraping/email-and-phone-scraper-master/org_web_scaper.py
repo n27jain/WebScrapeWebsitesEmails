@@ -26,7 +26,7 @@ book = Workbook()
 sheet = book.active
 
 
-def start_scrape(page, name_the_file):
+def start_scrape(page, name_the_file, cli_name):
 
     print("\n\nWebpage is currently being scrapped... please wait...")
        
@@ -89,7 +89,7 @@ def start_scrape(page, name_the_file):
 
 def main():
 
-    maker = ExcelMaker("California.xlsx", None)
+    maker = ExcelMaker("final.xlsx", None)
     maker.readExcel()
     emails = []
     phone_nums = []
@@ -99,21 +99,21 @@ def main():
     for item in maker.items:
         if item.Web != None:
             url = item.Web
-            name = item.Name
-
+            name = "emails_scrapped"
+            print("handling url: ", url)
             if save_excel:
                 name_the_file = name
 
             try:
                 print("trying")
                 page = urlopen(url) 
-                start_scrape(page,name_the_file)
+                start_scrape(page,name_the_file,item.Name)
             except:
                 print("trying harder")
                 hdr = {'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_3) '}
                 req = Request(url, headers=hdr)
                 page = urlopen(req)
-                start_scrape(page,name_the_file)
+                start_scrape(page,name_the_file,item.Name)
 
 
 main()
