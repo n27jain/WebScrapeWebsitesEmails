@@ -28,10 +28,10 @@ class ExcelMaker:
             return "app/"+ self.fileName + ".xlsx" # save file to machine
         else:
             return None
-    def makeExcelByEmails(self, emails):
+    def makeExcelByEmails(self, emails, savefileName):
 
-        print("here again : ", self.fname)
-        workbook = xlsxwriter.Workbook("app/"+self.fname + ".xlsx")
+        print("here again : ", savefileName)
+        workbook = xlsxwriter.Workbook(savefileName + ".xlsx")
         worksheet = workbook.add_worksheet()
         worksheet.write(0, 0, "Name")
         worksheet.write(0, 1, "Email")

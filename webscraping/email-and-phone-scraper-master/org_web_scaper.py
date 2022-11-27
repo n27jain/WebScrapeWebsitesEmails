@@ -127,7 +127,7 @@ def main():
                     emails += [item.Name, None]
     
 
-    maker.makeExcelByEmails(emails=emails)
+    maker.makeExcelByEmails(emails=emails, savefileName= "scraped_with_names")
 
 
 main()
