@@ -104,8 +104,10 @@ def main():
     phone_nums = []
 
     url = "https://vstl.info/"
-
+    i = 0
     for item in maker.items:
+        if i == 5:
+            break
         if item.Web != None:
             url = item.Web
             name = "emails_scrapped"
@@ -125,7 +127,10 @@ def main():
                 except BaseException as error:
                     print("error was found: ", error)
                     emails += [item.Name, None]
-    
+        # i+=1
+    print("IMPORTANT")
+    for email in emails:
+        print(email)
 
     maker.makeExcelByEmails(emails=emails, savefileName= "scraped_with_names")
 

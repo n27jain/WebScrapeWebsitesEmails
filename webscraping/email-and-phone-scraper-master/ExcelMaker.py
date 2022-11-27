@@ -38,15 +38,20 @@ class ExcelMaker:
         i = 1
         current = None
         for email in emails:
-            print("type: ", type(email))
-            print("value: ", email)
-            if email[0] == current:
-                worksheet.write(i + 1, 1, email[1])
-                i += 1
-            else:
-                current = email[0]
-                worksheet.write(i + 1, 0, email[0])
-                worksheet.write(i + 1, 1, email[1])
+            print("email", email)
+            if email:
+                if not email[0] : email[0] = ""
+                if not email[1] : email[1] = ""
+
+                if current and email[0] == current:
+                    worksheet.write(i + 1, 1, email[1])
+                    i += 1
+                    
+                else:
+                    current = email[0]
+                    worksheet.write(i + 1, 0, email[0])
+                    worksheet.write(i + 1, 1, email[1])
+                    i += 1 
         workbook.close()
         return
             
