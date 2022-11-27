@@ -114,22 +114,19 @@ def main():
                 name_the_file = name
 
             try:
-                print("trying")
                 page = urlopen(url) 
-                emails.append(start_scrape(page,name_the_file,item.Name))
+                emails += start_scrape(page,name_the_file,item.Name)
             except:
                 try:
-                    print("trying harder")
                     hdr = {'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_3) '}
                     req = Request(url, headers=hdr)
                     page = urlopen(req)
-                    emails.append(start_scrape(page,name_the_file,item.Name))
+                    emails += start_scrape(page,name_the_file,item.Name)
                 except BaseException as error:
                     print("error was found: ", error)
-                    emails.append([item.Name, None])
+                    emails += [item.Name, None]
     
-    # for email in emails:
-    #     print(email, "\n")
+
     maker.makeExcelByEmails(emails=emails)
 
 

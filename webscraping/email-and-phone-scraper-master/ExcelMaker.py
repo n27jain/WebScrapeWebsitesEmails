@@ -38,6 +38,8 @@ class ExcelMaker:
         i = 1
         current = None
         for email in emails:
+            print("type: ", type(email))
+            print("value: ", email)
             if email[0] == current:
                 worksheet.write(i + 1, 1, email[1])
                 i += 1
