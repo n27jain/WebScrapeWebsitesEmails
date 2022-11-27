@@ -46,6 +46,13 @@ def start_scrape(page, name_the_file, cli_name):
     number_of_dup_email = int(dupemail) - int(nodupemail)
 
     email_list = list(emails)
+    output = []
+
+    if len(email_list) > 0 :
+        for em in email_list:
+            output.append([cli_name,em])
+    else:
+        output.append([cli_name, None])
 
     if len(phone_numbers) == 0:
         print("No phone number(s) found.")
@@ -67,12 +74,13 @@ def start_scrape(page, name_the_file, cli_name):
         for item in emails:
             print('Email address #' + str(count) + ': ' + item)
             count += 1
-
+    print("TEST:" , type(zip(email_list)) , tuple(zip(email_list)) )
     if save_excel:
         for row in zip(email_list):
             sheet.append(row)
         excel_file = (name_the_file + ".xlsx")
         book.save(excel_file) 
+       
        
     print("\nDuplicates have been removed from list.")
     print("Total phone numbers: ", nodupnumber)
@@ -86,6 +94,7 @@ def start_scrape(page, name_the_file, cli_name):
         mod_time = os.stat(excel_file).st_mtime
         print("\nCompleted at: " + str(datetime.fromtimestamp(mod_time)))
         print("\nSize of file: " + str(os.stat(excel_file).st_size) + " KB")
+    return output
 
 def main():
 
@@ -107,13 +116,21 @@ def main():
             try:
                 print("trying")
                 page = urlopen(url) 
-                start_scrape(page,name_the_file,item.Name)
+                emails.append(start_scrape(page,name_the_file,item.Name))
             except:
-                print("trying harder")
-                hdr = {'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_3) '}
-                req = Request(url, headers=hdr)
-                page = urlopen(req)
-                start_scrape(page,name_the_file,item.Name)
+                try:
+                    print("trying harder")
+                    hdr = {'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_3) '}
+                    req = Request(url, headers=hdr)
+                    page = urlopen(req)
+                    emails.append(start_scrape(page,name_the_file,item.Name))
+                except BaseException as error:
+                    print("error was found: ", error)
+                    emails.append([item.Name, None])
+    
+    # for email in emails:
+    #     print(email, "\n")
+    maker.makeExcelByEmails(emails=emails)
 
 
 main()
