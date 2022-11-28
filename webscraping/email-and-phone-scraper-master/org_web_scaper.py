@@ -97,7 +97,7 @@ def start_scrape(page, name_the_file, cli_name):
     return output
 
 def main(filename):
-
+    print("Starting: ", filename)
     maker = ExcelMaker(filename, None)
     maker.readExcel()
     emails = []

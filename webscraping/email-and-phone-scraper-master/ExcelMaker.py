@@ -38,14 +38,17 @@ class ExcelMaker:
         i = 1
         current = None
         for email in emails:
-            print("email", email)
-            if email:
+            print("email", email, " type: ", type(email))
+            if (type(email) == type("haha") or type(email) == type(['SMR Asset Recovery LLC DBA Sprout', 'Usinfo@sproutup.com'])) and email:
+                if len(email) == 0: # there is only company name and NONE is next
+                    continue
+                elif len(email) == 1: # there is only company name and NONE is next
+                    worksheet.write(i + 1, 0, email[0])
+                    i += 1
                 if not email[0] : email[0] = ""
                 if not email[1] : email[1] = ""
 
-                if len(email) == 1: # there is only company name and NONE is next
-                    worksheet.write(i + 1, 0, email[0])
-                    i += 1
+                
 
                 elif current and email[0] == current:
                     worksheet.write(i + 1, 1, email[1])
@@ -65,7 +68,9 @@ class ExcelMaker:
         items= [] 
         for i in range(size):
             row = df.loc[i].values
-            item = Item(row[0], row[1] ,row[2], row[3], row[4])
+            print("length is: " , len(row))
+            if len(row) >= 3:
+                item = Item(row[0], None ,row[2], None, None)
             # item.printItem()
             items.append(item)
         self.items = items
