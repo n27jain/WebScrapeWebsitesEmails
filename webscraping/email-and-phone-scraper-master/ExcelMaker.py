@@ -43,7 +43,11 @@ class ExcelMaker:
                 if not email[0] : email[0] = ""
                 if not email[1] : email[1] = ""
 
-                if current and email[0] == current:
+                if len(email) == 1: # there is only company name and NONE is next
+                    worksheet.write(i + 1, 0, email[0])
+                    i += 1
+
+                elif current and email[0] == current:
                     worksheet.write(i + 1, 1, email[1])
                     i += 1
                     

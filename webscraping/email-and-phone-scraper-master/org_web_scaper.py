@@ -96,9 +96,9 @@ def start_scrape(page, name_the_file, cli_name):
         print("\nSize of file: " + str(os.stat(excel_file).st_size) + " KB")
     return output
 
-def main():
+def main(filename):
 
-    maker = ExcelMaker("final.xlsx", None)
+    maker = ExcelMaker(filename, None)
     maker.readExcel()
     emails = []
     phone_nums = []
@@ -131,8 +131,10 @@ def main():
     print("IMPORTANT")
     for email in emails:
         print(email)
+    filename_out = "scrapped" + filename
+    maker.makeExcelByEmails(emails=emails, savefileName= filename_out)
 
-    maker.makeExcelByEmails(emails=emails, savefileName= "scraped_with_names")
 
-
-main()
+main("calif.xlsx")
+main("Florida.xlsx")
+main("Texas.xlsx")
